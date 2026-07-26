@@ -40,6 +40,11 @@ security:
     # Note: Only the *first* matching rule is applied
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/profil, roles: ROLE_ADMIN }
+         - { path: ^/projet, roles: ROLE_ADMIN }
+         - { path: ^/competence, roles: ROLE_ADMIN }
+         - { path: ^/parcours, roles: ROLE_ADMIN }
+         - { path: ^/message, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
