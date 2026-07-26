@@ -1,0 +1,131 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #0d1117;
+    color: #e6edf3;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 280px;
+    background-color: #161b22;
+    border-radius: 16px;
+    margin: 20px;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+}
+
+.sidebar img {
+    width: 140px;
+    height: 140px;
+    border-radius: 12px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.sidebar h2 {
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.sidebar .titre-poste {
+    background-color: #21262d;
+    color: #7ee787;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin: 12px 0 25px;
+}
+
+.info-block {
+    width: 100%;
+    margin-bottom: 18px;
+}
+
+.info-block label {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #8b949e;
+    margin-bottom: 5px;
+}
+
+.info-block .valeur {
+    background-color: #0d1117;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    word-break: break-word;
+}
+
+/* MAIN CONTENT */
+.main-content {
+    flex: 1;
+    padding: 30px 40px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.navbar nav {
+    display: flex;
+    gap: 25px;
+}
+
+.navbar nav a {
+    color: #c9d1d9;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+.navbar nav a:hover,
+.navbar nav a.active {
+    color: #58a6ff;
+}
+
+.theme-toggle {
+    background-color: #21262d;
+    border: none;
+    color: #e6edf3;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+/* LIGHT MODE */
+body.light-mode {
+    background-color: #f6f8fa;
+    color: #24292f;
+}
+
+body.light-mode .sidebar,
+body.light-mode .info-block .valeur,
+body.light-mode .theme-toggle {
+    background-color: #ffffff;
+    border: 1px solid #d0d7de;
+}
+
+body.light-mode .sidebar .titre-poste {
+    background-color: #ddf4ff;
+    color: #0969da;
+}

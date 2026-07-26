@@ -16,28 +16,69 @@ class VisiteRepository extends ServiceEntityRepository
         parent::__construct($registry, Visite::class);
     }
 
-    //    /**
-    //     * @return Visite[] Returns an array of Visite objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('v')
-    //            ->andWhere('v.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('v.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+public function countTotal(): int
+{
+    return $this->count([]);
+}
 
-    //    public function findOneBySomeField($value): ?Visite
-    //    {
-    //        return $this->createQueryBuilder('v')
-    //            ->andWhere('v.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+public function countUniqueVisitors(): int
+{
+    return (int) $this->createQueryBuilder('v')
+        ->select('COUNT(DISTINCT v.adresseIp)')
+        ->getQuery()
+        ->getSingleScalarResult();
+}
+
+public function countToday(): int
+{
+    $debut = new \DateTimeImmutable('today');
+
+    return (int) $this->createQueryBuilder('v')
+        ->select('COUNT(v.id)')
+        ->where('v.dateVisite >= :debut')
+        ->setParameter('debut', $debut)
+        ->getQuery()
+        ->getSingleScalarResult();
+}
+
+public function visitesParJour(int $nbJours = 7): array
+{
+    $debut = new \DateTimeImmutable("-{$nbJours} days");
+
+    $visites = $this->createQueryBuilder('v')
+        ->where('v.dateVisite >= :debut')
+        ->setParameter('debut', $debut)
+        ->getQuery()
+        ->getResult();
+
+    $parJour = [];
+
+    foreach ($visites as $visite) {
+        $jour = $visite->getDateVisite()->format('Y-m-d');
+        if (!isset($parJour[$jour])) {
+            $parJour[$jour] = 0;
+        }
+        $parJour[$jour]++;
+    }
+
+    ksort($parJour);
+
+    $resultats = [];
+    foreach ($parJour as $jour => $total) {
+        $resultats[] = ['jour' => $jour, 'total' => $total];
+    }
+
+    return $resultats;
+}
+
+public function pagesLesPlusVisitees(int $limite = 5): array
+{
+    return $this->createQueryBuilder('v')
+        ->select('v.pageVisitee, COUNT(v.id) as total')
+        ->groupBy('v.pageVisitee')
+        ->orderBy('total', 'DESC')
+        ->setMaxResults($limite)
+        ->getQuery()
+        ->getResult();
+}
 }

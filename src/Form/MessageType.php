@@ -15,10 +15,6 @@ class MessageType extends AbstractType
             ->add('nom')
             ->add('email')
             ->add('contenu')
-            ->add('dateEnvoi', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('lu')
         ;
     }
 

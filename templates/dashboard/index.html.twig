@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard - Admin{% endblock %}
+
+{% block body %}
+    <h1>Tableau de bord</h1>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-top: 30px;">
+        <div style="background-color: #161b22; padding: 20px; border-radius: 12px;">
+            <p style="color: #8b949e; font-size: 0.85rem;">Visites totales</p>
+            <p style="font-size: 2rem; font-weight: bold;">{{ totalVisites }}</p>
+        </div>
+        <div style="background-color: #161b22; padding: 20px; border-radius: 12px;">
+            <p style="color: #8b949e; font-size: 0.85rem;">Visiteurs uniques</p>
+            <p style="font-size: 2rem; font-weight: bold;">{{ visiteursUniques }}</p>
+        </div>
+        <div style="background-color: #161b22; padding: 20px; border-radius: 12px;">
+            <p style="color: #8b949e; font-size: 0.85rem;">Visites aujourd'hui</p>
+            <p style="font-size: 2rem; font-weight: bold;">{{ visitesAujourdhui }}</p>
+        </div>
+        <div style="background-color: #161b22; padding: 20px; border-radius: 12px;">
+            <p style="color: #8b949e; font-size: 0.85rem;">Messages non lus</p>
+            <p style="font-size: 2rem; font-weight: bold;">{{ nbMessagesNonLus }}</p>
+        </div>
+    </div>
+
+    <h2 style="margin-top: 40px;">Visites des 7 derniers jours</h2>
+    <div style="margin-top: 15px;">
+        {% for jour in visitesParJour %}
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                <span style="width: 90px; font-size: 0.85rem; color: #8b949e;">{{ jour.jour }}</span>
+                <div style="background-color: #58a6ff; height: 20px; width: {{ jour.total * 20 }}px; border-radius: 4px;"></div>
+                <span style="font-size: 0.85rem;">{{ jour.total }}</span>
+            </div>
+        {% else %}
+            <p>Aucune donnée pour le moment.</p>
+        {% endfor %}
+    </div>
+
+    <h2 style="margin-top: 40px;">Pages les plus visitées</h2>
+    <ul style="margin-top: 15px;">
+        {% for page in pagesPopulaires %}
+            <li style="margin-bottom: 8px;">{{ page.pageVisitee }} — <strong>{{ page.total }}</strong> visites</li>
+        {% else %}
+            <li>Aucune donnée.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

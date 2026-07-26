@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projets - Portfolio{% endblock %}
+
+{% block body %}
+    <h1>Portfolio</h1>
+
+    <div style="margin: 20px 0; display: flex; gap: 20px;">
+        <a href="{{ path('app_projets_public') }}" style="color: {{ categorieActive is null ? '#58a6ff' : '#8b949e' }}; text-decoration: none;">Tous</a>
+        <a href="{{ path('app_projets_public', {categorie: 'Full-Stack'}) }}" style="color: {{ categorieActive == 'Full-Stack' ? '#58a6ff' : '#8b949e' }}; text-decoration: none;">Full-Stack</a>
+        <a href="{{ path('app_projets_public', {categorie: 'IA & Data'}) }}" style="color: {{ categorieActive == 'IA & Data' ? '#58a6ff' : '#8b949e' }}; text-decoration: none;">IA & Data</a>
+        <a href="{{ path('app_projets_public', {categorie: 'Applications'}) }}" style="color: {{ categorieActive == 'Applications' ? '#58a6ff' : '#8b949e' }}; text-decoration: none;">Applications</a>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+        {% for projet in projets %}
+            <div style="background-color: #161b22; border-radius: 12px; overflow: hidden;">
+                {% if projet.image %}
+                    <img src="{{ asset('uploads/' ~ projet.image) }}" alt="{{ projet.titre }}" style="width: 100%; height: 160px; object-fit: cover;">
+                {% endif %}
+                <div style="padding: 15px;">
+                    <h3>{{ projet.titre }}</h3>
+                    <p style="color: #8b949e; font-size: 0.85rem;">{{ projet.categorie }}</p>
+                </div>
+            </div>
+        {% else %}
+            <p>Aucun projet pour cette catégorie.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
