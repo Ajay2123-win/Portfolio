@@ -1,69 +1,110 @@
+:root {
+    --bg-principal: #0a0e14;
+    --bg-carte: #131820;
+    --bg-input: #0a0e14;
+    --bordure: #232a35;
+    --texte-principal: #e8eaed;
+    --texte-secondaire: #8b93a1;
+    --accent: #7c5cff;
+    --accent-hover: #9277ff;
+    --accent-soft: rgba(124, 92, 255, 0.12);
+    --succes: #3fb950;
+}
+
 body {
-    background-color: #0d1117;
-    color: #e6edf3;
+    background-color: var(--bg-principal);
+    color: var(--texte-principal);
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+h1, h2, h3, h4, h5, .titre-poste {
+    font-family: 'Space Grotesk', sans-serif;
 }
 
 .sidebar {
-    background-color: #161b22;
-    border-radius: 16px;
+    background-color: var(--bg-carte);
+    border-right: 1px solid var(--bordure);
     min-height: 100vh;
 }
 
 .sidebar img {
-    border: 2px solid #30363d;
+    border: 2px solid var(--bordure);
 }
 
 .titre-poste {
-    background-color: #21262d !important;
-    color: #7ee787 !important;
+    background-color: var(--accent-soft) !important;
+    color: var(--accent-hover) !important;
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+
+.info-block label {
+    font-size: 0.68rem;
+    letter-spacing: 0.6px;
 }
 
 .info-block .valeur {
-    background-color: #0d1117;
-    padding: 8px 12px;
+    background-color: var(--bg-input);
+    padding: 9px 13px;
     border-radius: 8px;
-    border: 1px solid #21262d;
+    border: 1px solid var(--bordure);
+    font-size: 0.88rem;
 }
 
 .nav-link-custom {
-    color: #c9d1d9;
+    color: var(--texte-secondaire);
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 0.92rem;
+    font-weight: 500;
     padding-bottom: 4px;
     border-bottom: 2px solid transparent;
     transition: color 0.2s;
 }
 
 .nav-link-custom:hover {
-    color: #58a6ff;
+    color: var(--accent-hover);
 }
 
 .theme-toggle {
-    background-color: #21262d;
-    color: #e6edf3;
-    border: none;
+    background-color: var(--bg-carte);
+    color: var(--texte-principal);
+    border: 1px solid var(--bordure);
+    font-size: 0.85rem;
 }
 
 .theme-toggle:hover {
-    background-color: #30363d;
-    color: #e6edf3;
+    border-color: var(--accent);
+    color: var(--texte-principal);
 }
 
-/* LIGHT MODE (commun) */
+/* Boutons Bootstrap réadaptés à l'accent */
+.btn-success {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+
+.btn-success:hover {
+    background-color: var(--accent-hover);
+    border-color: var(--accent-hover);
+}
+
+.btn-outline-primary {
+    color: var(--accent-hover);
+    border-color: var(--accent);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+
+/* LIGHT MODE */
 body.light-mode {
-    background-color: #f6f8fa;
-    color: #24292f;
-}
-
-body.light-mode .sidebar,
-body.light-mode .info-block .valeur,
-body.light-mode .theme-toggle {
-    background-color: #ffffff;
-    border-color: #d0d7de;
-    color: #24292f;
-}
-
-body.light-mode .titre-poste {
-    background-color: #ddf4ff !important;
-    color: #0969da !important;
+    --bg-principal: #f7f8fa;
+    --bg-carte: #ffffff;
+    --bg-input: #ffffff;
+    --bordure: #e1e4e8;
+    --texte-principal: #1c2128;
+    --texte-secondaire: #656d76;
+    --accent-soft: rgba(124, 92, 255, 0.08);
 }

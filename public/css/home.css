@@ -1,60 +1,63 @@
 .hero {
-    padding: 20px 0 10px;
+    padding: 30px 0 15px;
+}
+
+.hero h1 {
+    font-size: 2.75rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
 .hero .sous-titre {
-    color: #8b949e;
+    color: var(--texte-secondaire);
     font-size: 1.1rem;
-    margin: 15px 0 25px;
+    margin: 18px 0 32px;
     max-width: 600px;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 .btn-primaire {
-    background-color: #238636;
+    background-color: var(--accent);
     color: white !important;
-    padding: 12px 28px;
+    padding: 13px 30px;
     border-radius: 8px;
     text-decoration: none !important;
     font-size: 0.95rem;
+    font-weight: 500;
     display: inline-block;
     transition: background-color 0.2s;
 }
 
 .btn-primaire:hover {
-    background-color: #2ea043;
+    background-color: var(--accent-hover);
 }
 
 .btn-secondaire {
     background-color: transparent;
-    color: #e6edf3 !important;
-    padding: 12px 28px;
+    color: var(--texte-principal) !important;
+    padding: 13px 30px;
     border-radius: 8px;
     text-decoration: none !important;
     font-size: 0.95rem;
+    font-weight: 500;
     display: inline-block;
-    border: 1px solid #30363d;
+    border: 1px solid var(--bordure);
     transition: border-color 0.2s;
 }
 
 .btn-secondaire:hover {
-    border-color: #58a6ff;
+    border-color: var(--accent);
 }
 
 .section-titre {
-    font-size: 1.5rem;
-    margin: 40px 0 20px;
-}
-
-.projets-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 20px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 55px 0 24px;
 }
 
 .projet-card {
-    background-color: #161b22;
-    border: 1px solid #21262d;
+    background-color: var(--bg-carte);
+    border: 1px solid var(--bordure);
     border-radius: 12px;
     overflow: hidden;
     transition: transform 0.2s, border-color 0.2s;
@@ -62,7 +65,7 @@
 
 .projet-card:hover {
     transform: translateY(-4px);
-    border-color: #58a6ff;
+    border-color: var(--accent);
 }
 
 .projet-card img {
@@ -72,21 +75,17 @@
 }
 
 .projet-card .contenu {
-    padding: 15px 18px;
+    padding: 16px 18px;
 }
 
 .projet-card h3 {
     font-size: 1.05rem;
     margin-bottom: 4px;
+    font-weight: 600;
 }
 
 .projet-card .categorie {
-    color: #8b949e;
+    color: var(--texte-secondaire);
     font-size: 0.8rem;
     margin: 0;
-}
-
-body.light-mode .projet-card {
-    background-color: #ffffff;
-    border-color: #d0d7de;
 }
