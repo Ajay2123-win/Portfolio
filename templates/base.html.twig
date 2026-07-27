@@ -12,7 +12,7 @@
 
     <aside class="sidebar">
         {% if profil %}
-            <img src="{{ profil.photo ? asset('uploads/' ~ profil.photo) : asset('css/default-avatar.png') }}" alt="Photo de profil">
+            <img src="{{ profil.photo ? asset('uploads/photos/' ~ profil.photo) : asset('css/default-avatar.png') }}" alt="Photo de profil">
             <h2>{{ profil.prenom }} {{ profil.nom }}</h2>
             <div class="titre-poste">{{ profil.titre }}</div>
 
