@@ -1,0 +1,85 @@
+.stat-card {
+    background-color: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.stat-card .label {
+    color: #8b949e;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-card .valeur {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.stat-card .icone {
+    font-size: 1.3rem;
+    color: #58a6ff;
+}
+
+.section-dashboard {
+    margin-top: 45px;
+}
+
+.section-dashboard h2 {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.barre-visite {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.barre-visite .jour-label {
+    width: 95px;
+    font-size: 0.85rem;
+    color: #8b949e;
+}
+
+.barre-visite .barre {
+    background-color: #58a6ff;
+    height: 18px;
+    border-radius: 4px;
+    min-width: 4px;
+}
+
+.barre-visite .total {
+    font-size: 0.85rem;
+    color: #8b949e;
+    min-width: 25px;
+}
+
+.liste-pages {
+    list-style: none;
+    padding: 0;
+}
+
+.liste-pages li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #21262d;
+    font-size: 0.9rem;
+}
+
+.liste-pages li:last-child {
+    border-bottom: none;
+}
+
+body.light-mode .stat-card {
+    background-color: #ffffff;
+    border-color: #d0d7de;
+}
+
+body.light-mode .liste-pages li {
+    border-bottom-color: #d0d7de;
+}

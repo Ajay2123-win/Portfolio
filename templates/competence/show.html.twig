@@ -1,34 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Competence{% endblock %}
+{% block title %}Détail de la Compétence{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h1>Competence</h1>
+    <div class="admin-header">
+        <h1 class="h3 mb-0">Compétence #{{ competence.id }}</h1>
+        <a href="{{ path('app_competence_index') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Retour à la liste
+        </a>
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ competence.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ competence.nom }}</td>
-            </tr>
-            <tr>
-                <th>Categorie</th>
-                <td>{{ competence.categorie }}</td>
-            </tr>
-            <tr>
-                <th>Niveau</th>
-                <td>{{ competence.niveau }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="show-panel mb-3">
+        <table>
+            <tbody>
+                <tr><th>Id</th><td>{{ competence.id }}</td></tr>
+                <tr><th>Nom</th><td>{{ competence.nom }}</td></tr>
+                <tr><th>Catégorie</th><td>{{ competence.categorie }}</td></tr>
+                <tr><th>Niveau</th><td>{{ competence.niveau }}</td></tr>
+            </tbody>
+        </table>
+    </div>
 
-    <a href="{{ path('app_competence_index') }}">back to list</a>
-
-    <a href="{{ path('app_competence_edit', {'id': competence.id}) }}">edit</a>
-
-    {{ include('competence/_delete_form.html.twig') }}
+    <a href="{{ path('app_competence_edit', {'id': competence.id}) }}" class="btn btn-primary">Modifier</a>
 {% endblock %}

@@ -1,0 +1,69 @@
+body {
+    background-color: #0d1117;
+    color: #e6edf3;
+}
+
+.sidebar {
+    background-color: #161b22;
+    border-radius: 16px;
+    min-height: 100vh;
+}
+
+.sidebar img {
+    border: 2px solid #30363d;
+}
+
+.titre-poste {
+    background-color: #21262d !important;
+    color: #7ee787 !important;
+}
+
+.info-block .valeur {
+    background-color: #0d1117;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #21262d;
+}
+
+.nav-link-custom {
+    color: #c9d1d9;
+    text-decoration: none;
+    font-size: 0.95rem;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s;
+}
+
+.nav-link-custom:hover {
+    color: #58a6ff;
+}
+
+.theme-toggle {
+    background-color: #21262d;
+    color: #e6edf3;
+    border: none;
+}
+
+.theme-toggle:hover {
+    background-color: #30363d;
+    color: #e6edf3;
+}
+
+/* LIGHT MODE (commun) */
+body.light-mode {
+    background-color: #f6f8fa;
+    color: #24292f;
+}
+
+body.light-mode .sidebar,
+body.light-mode .info-block .valeur,
+body.light-mode .theme-toggle {
+    background-color: #ffffff;
+    border-color: #d0d7de;
+    color: #24292f;
+}
+
+body.light-mode .titre-poste {
+    background-color: #ddf4ff !important;
+    color: #0969da !important;
+}

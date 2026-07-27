@@ -1,0 +1,43 @@
+.bio-texte {
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 750px;
+    color: #c9d1d9;
+}
+
+.competences-liste {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.competence-badge {
+    background-color: #21262d;
+    color: #e6edf3;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    border: 1px solid #30363d;
+}
+
+.competence-categorie {
+    margin-bottom: 30px;
+}
+
+.competence-categorie h3 {
+    font-size: 1rem;
+    color: #8b949e;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+body.light-mode .bio-texte {
+    color: #24292f;
+}
+
+body.light-mode .competence-badge {
+    background-color: #ffffff;
+    border-color: #d0d7de;
+    color: #24292f;
+}

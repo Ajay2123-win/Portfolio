@@ -2,25 +2,36 @@
 
 {% block title %}Projets - Portfolio{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/projets.css') }}">
+{% endblock %}
+
 {% block body %}
     <h1>Portfolio</h1>
 
-    <div style="margin: 20px 0; display: flex; gap: 20px;">
-        <a href="{{ path('app_projets_public') }}" style="color: {{ categorieActive is null ? '#58a6ff' : '#8b949e' }}; text-decoration: none;">Tous</a>
-        <a href="{{ path('app_projets_public', {categorie: 'Full-Stack'}) }}" style="color: {{ categorieActive == 'Full-Stack' ? '#58a6ff' : '#8b949e' }}; text-decoration: none;">Full-Stack</a>
-        <a href="{{ path('app_projets_public', {categorie: 'IA & Data'}) }}" style="color: {{ categorieActive == 'IA & Data' ? '#58a6ff' : '#8b949e' }}; text-decoration: none;">IA & Data</a>
-        <a href="{{ path('app_projets_public', {categorie: 'Applications'}) }}" style="color: {{ categorieActive == 'Applications' ? '#58a6ff' : '#8b949e' }}; text-decoration: none;">Applications</a>
+    <div class="filtres">
+        <a href="{{ path('app_projets_public') }}" class="{{ categorieActive is null ? 'active' : '' }}">Tous</a>
+        <a href="{{ path('app_projets_public', {categorie: 'Full-Stack'}) }}" class="{{ categorieActive == 'Full-Stack' ? 'active' : '' }}">Full-Stack</a>
+        <a href="{{ path('app_projets_public', {categorie: 'IA & Data'}) }}" class="{{ categorieActive == 'IA & Data' ? 'active' : '' }}">IA & Data</a>
+        <a href="{{ path('app_projets_public', {categorie: 'Applications'}) }}" class="{{ categorieActive == 'Applications' ? 'active' : '' }}">Applications</a>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+    <div class="row g-4">
         {% for projet in projets %}
-            <div style="background-color: #161b22; border-radius: 12px; overflow: hidden;">
-                {% if projet.image %}
-                    <img src="{{ asset('uploads/projets/' ~ projet.image) }}" alt="{{ projet.titre }}" style="width: 100%; height: 160px; object-fit: cover;">
-                {% endif %}
-                <div style="padding: 15px;">
-                    <h3>{{ projet.titre }}</h3>
-                    <p style="color: #8b949e; font-size: 0.85rem;">{{ projet.categorie }}</p>
+            <div class="col-md-6 col-xl-4">
+                <div class="projet-card h-100">
+                    {% if projet.image %}
+                        <img src="{{ asset('uploads/projets/' ~ projet.image) }}" alt="{{ projet.titre }}">
+                    {% endif %}
+                    <div class="contenu">
+                        <h3>{{ projet.titre }}</h3>
+                        <p class="categorie">{{ projet.categorie }}</p>
+                        {% if projet.lien %}
+                            <a href="{{ projet.lien }}" class="lien-projet" target="_blank">
+                                Voir le projet <i class="bi bi-arrow-right"></i>
+                            </a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         {% else %}

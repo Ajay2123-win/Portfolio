@@ -2,23 +2,37 @@
 
 {% block title %}À propos - Portfolio{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/apropos.css') }}">
+{% endblock %}
+
 {% block body %}
-    <h1>À propos de moi</h1>
+    <h1 class="mb-4">À propos de moi</h1>
 
     {% if profil and profil.bio %}
-        <p style="margin-top: 20px; line-height: 1.6; max-width: 700px;">{{ profil.bio }}</p>
+        <p class="bio-texte mb-5">{{ profil.bio }}</p>
     {% else %}
-        <p>Aucune biographie renseignée pour le moment.</p>
+        <p class="text-secondary mb-5">Aucune biographie renseignée pour le moment.</p>
     {% endif %}
 
-    <h2 style="margin-top: 40px;">Compétences</h2>
-    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;">
-        {% for competence in competences %}
-            <span style="background-color: #21262d; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem;">
-                {{ competence.nom }}
-            </span>
-        {% else %}
-            <p>Aucune compétence renseignée.</p>
+    <h2 class="h4 mb-3">Compétences</h2>
+
+    {% set categories = competences|map(c => c.categorie)|reduce((acc, item) => item in acc ? acc : acc|merge([item]), []) %}
+
+    {% if categories is empty %}
+        <p class="text-secondary">Aucune compétence renseignée.</p>
+    {% else %}
+        {% for categorie in categories %}
+            <div class="competence-categorie">
+                <h3>{{ categorie }}</h3>
+                <div class="competences-liste">
+                    {% for competence in competences %}
+                        {% if competence.categorie == categorie %}
+                            <span class="competence-badge">{{ competence.nom }}</span>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
         {% endfor %}
-    </div>
+    {% endif %}
 {% endblock %}

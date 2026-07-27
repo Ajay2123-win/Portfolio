@@ -1,13 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Competence{% endblock %}
+{% block title %}Modifier la Compétence{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Competence</h1>
+    <div class="admin-header">
+        <h1 class="h3 mb-0">Modifier la compétence</h1>
+        <a href="{{ path('app_competence_index') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Retour à la liste
+        </a>
+    </div>
 
-    {{ include('competence/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_competence_index') }}">back to list</a>
+    {{ include('competence/_form.html.twig') }}
 
     {{ include('competence/_delete_form.html.twig') }}
 {% endblock %}

@@ -1,45 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Parcours index{% endblock %}
+{% block title %}Gestion du Parcours{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h1>Parcours index</h1>
+    <div class="admin-header">
+        <h1 class="h3 mb-0">Parcours</h1>
+        <a href="{{ path('app_parcours_new') }}" class="btn btn-success">
+            <i class="bi bi-plus-lg"></i> Nouvelle étape
+        </a>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titre</th>
-                <th>Etablissement</th>
-                <th>Description</th>
-                <th>DateDebut</th>
-                <th>DateFin</th>
-                <th>Type</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for parcour in parcours %}
-            <tr>
-                <td>{{ parcour.id }}</td>
-                <td>{{ parcour.titre }}</td>
-                <td>{{ parcour.etablissement }}</td>
-                <td>{{ parcour.description }}</td>
-                <td>{{ parcour.dateDebut ? parcour.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ parcour.dateFin ? parcour.dateFin|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ parcour.type }}</td>
-                <td>
-                    <a href="{{ path('app_parcours_show', {'id': parcour.id}) }}">show</a>
-                    <a href="{{ path('app_parcours_edit', {'id': parcour.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_parcours_new') }}">Create new</a>
+    <div class="table-responsive">
+        <table class="table-admin">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Titre</th>
+                    <th>Établissement</th>
+                    <th>Type</th>
+                    <th>Début</th>
+                    <th>Fin</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for parcour in parcours %}
+                <tr>
+                    <td>{{ parcour.id }}</td>
+                    <td>{{ parcour.titre }}</td>
+                    <td>{{ parcour.etablissement }}</td>
+                    <td>{{ parcour.type }}</td>
+                    <td>{{ parcour.dateDebut ? parcour.dateDebut|date('m/Y') : '' }}</td>
+                    <td>{{ parcour.dateFin ? parcour.dateFin|date('m/Y') : 'En cours' }}</td>
+                    <td>
+                        <div class="actions-cell">
+                            <a href="{{ path('app_parcours_show', {'id': parcour.id}) }}" class="btn btn-outline-secondary btn-sm">Voir</a>
+                            <a href="{{ path('app_parcours_edit', {'id': parcour.id}) }}" class="btn btn-outline-primary btn-sm">Modifier</a>
+                        </div>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="7" class="text-center text-secondary">Aucune étape trouvée</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

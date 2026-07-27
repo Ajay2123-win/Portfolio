@@ -1,8 +1,35 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Accueil - Portfolio{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h1>Bienvenue sur mon portfolio</h1>
-    <p>Développeur passionné, voici un aperçu de mes projets et compétences.</p>
+    <div class="hero">
+        <h1>Bonjour, je suis {{ profil ? profil.prenom : 'Développeur' }}</h1>
+        <p class="sous-titre">
+            {{ profil and profil.bio ? profil.bio|slice(0, 200) ~ '...' : 'Développeur passionné par la création de solutions web modernes et performantes.' }}
+        </p>
+        <div class="actions">
+            <a href="{{ path('app_projets_public') }}" class="btn-primaire">Voir mes projets</a>
+            <a href="{{ path('app_contact_public') }}" class="btn-secondaire">Me contacter</a>
+        </div>
+    </div>
+
+    <h2 class="section-titre">Quelques réalisations</h2>
+    <div class="projets-grid">
+        {% for projet in derniersProjets %}
+            <div class="projet-card">
+                {% if projet.image %}
+                    <img src="{{ asset('uploads/projets/' ~ projet.image) }}" alt="{{ projet.titre }}">
+                {% endif %}
+                <div class="contenu">
+                    <h3>{{ projet.titre }}</h3>
+                    <p class="categorie">{{ projet.categorie }}</p>
+                </div>
+            </div>
+        {% else %}
+            <p>Aucun projet pour le moment.</p>
+        {% endfor %}
+    </div>
 {% endblock %}

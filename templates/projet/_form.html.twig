@@ -1,4 +1,9 @@
-{{ form_start(form, {attr: {enctype: 'multipart/form-data'}}) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {attr: {enctype: 'multipart/form-data', class: 'admin-form'}}) }}
+    {% for child in form %}
+        <div class="mb-2">
+            {{ form_label(child) }}
+            {{ form_widget(child, {attr: {class: 'form-control'}}) }}
+        </div>
+    {% endfor %}
+    <button class="btn btn-success px-4">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}

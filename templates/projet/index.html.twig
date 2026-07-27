@@ -1,47 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Projet index{% endblock %}
+{% block title %}Gestion des Projets{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h1>Projet index</h1>
+    <div class="admin-header">
+        <h1 class="h3 mb-0">Projets</h1>
+        <a href="{{ path('app_projet_new') }}" class="btn btn-success">
+            <i class="bi bi-plus-lg"></i> Nouveau projet
+        </a>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Categorie</th>
-                <th>Image</th>
-                <th>Lien</th>
-                <th>Technologies</th>
-                <th>DateCreation</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for projet in projets %}
-            <tr>
-                <td>{{ projet.id }}</td>
-                <td>{{ projet.titre }}</td>
-                <td>{{ projet.description }}</td>
-                <td>{{ projet.categorie }}</td>
-                <td>{{ projet.image }}</td>
-                <td>{{ projet.lien }}</td>
-                <td>{{ projet.technologies }}</td>
-                <td>{{ projet.dateCreation ? projet.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_projet_show', {'id': projet.id}) }}">show</a>
-                    <a href="{{ path('app_projet_edit', {'id': projet.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_projet_new') }}">Create new</a>
+    <div class="table-responsive">
+        <table class="table-admin">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Titre</th>
+                    <th>Catégorie</th>
+                    <th>Technologies</th>
+                    <th>Date création</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for projet in projets %}
+                <tr>
+                    <td>{{ projet.id }}</td>
+                    <td>{{ projet.titre }}</td>
+                    <td>{{ projet.categorie }}</td>
+                    <td>{{ projet.technologies }}</td>
+                    <td>{{ projet.dateCreation ? projet.dateCreation|date('d/m/Y') : '' }}</td>
+                    <td>
+                        <div class="actions-cell">
+                            <a href="{{ path('app_projet_show', {'id': projet.id}) }}" class="btn btn-outline-secondary btn-sm">Voir</a>
+                            <a href="{{ path('app_projet_edit', {'id': projet.id}) }}" class="btn btn-outline-primary btn-sm">Modifier</a>
+                        </div>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center text-secondary">Aucun projet trouvé</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

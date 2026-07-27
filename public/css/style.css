@@ -1,115 +1,71 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
     background-color: #0d1117;
     color: #e6edf3;
-    display: flex;
+}
+
+.sidebar {
+    background-color: #161b22;
+    border-radius: 16px;
     min-height: 100vh;
 }
 
-/* SIDEBAR */
-.sidebar {
-    width: 280px;
-    background-color: #161b22;
-    border-radius: 16px;
-    margin: 20px;
-    padding: 30px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: fit-content;
-    position: sticky;
-    top: 20px;
-}
-
 .sidebar img {
-    width: 140px;
-    height: 140px;
-    border-radius: 12px;
-    object-fit: cover;
-    margin-bottom: 15px;
+    border: 2px solid #30363d;
 }
 
-.sidebar h2 {
-    font-size: 1.3rem;
-    text-align: center;
-}
-
-.sidebar .titre-poste {
-    background-color: #21262d;
-    color: #7ee787;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    margin: 12px 0 25px;
-}
-
-.info-block {
-    width: 100%;
-    margin-bottom: 18px;
-}
-
-.info-block label {
-    display: block;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    color: #8b949e;
-    margin-bottom: 5px;
+.titre-poste {
+    background-color: #21262d !important;
+    color: #7ee787 !important;
 }
 
 .info-block .valeur {
     background-color: #0d1117;
     padding: 8px 12px;
     border-radius: 8px;
-    font-size: 0.9rem;
-    word-break: break-word;
+    border: 1px solid #21262d;
 }
 
-/* MAIN CONTENT */
-.main-content {
-    flex: 1;
-    padding: 30px 40px;
-}
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
-.navbar nav {
-    display: flex;
-    gap: 25px;
-}
-
-.navbar nav a {
+.nav-link-custom {
     color: #c9d1d9;
     text-decoration: none;
     font-size: 0.95rem;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
     transition: color 0.2s;
 }
 
-.navbar nav a:hover,
-.navbar nav a.active {
+.nav-link-custom:hover {
     color: #58a6ff;
 }
 
 .theme-toggle {
     background-color: #21262d;
-    border: none;
     color: #e6edf3;
-    padding: 8px 14px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 0.85rem;
+    border: none;
+}
+
+.theme-toggle:hover {
+    background-color: #30363d;
+    color: #e6edf3;
+}
+
+.projet-card {
+    background-color: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.projet-card:hover {
+    transform: translateY(-4px);
+    border-color: #58a6ff;
+}
+
+.projet-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
 }
 
 /* LIGHT MODE */
@@ -120,12 +76,84 @@ body.light-mode {
 
 body.light-mode .sidebar,
 body.light-mode .info-block .valeur,
-body.light-mode .theme-toggle {
+body.light-mode .theme-toggle,
+body.light-mode .projet-card {
     background-color: #ffffff;
-    border: 1px solid #d0d7de;
+    border-color: #d0d7de;
+    color: #24292f;
 }
 
-body.light-mode .sidebar .titre-poste {
-    background-color: #ddf4ff;
-    color: #0969da;
+body.light-mode .titre-poste {
+    background-color: #ddf4ff !important;
+    color: #0969da !important;
+}
+/* HERO ACCUEIL */
+.hero {
+    padding: 20px 0 10px;
+}
+
+.hero .sous-titre {
+    color: #8b949e;
+    font-size: 1.1rem;
+    margin: 15px 0 25px;
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+.btn-primaire {
+    background-color: #238636;
+    color: white !important;
+    padding: 12px 28px;
+    border-radius: 8px;
+    text-decoration: none !important;
+    font-size: 0.95rem;
+    display: inline-block;
+    transition: background-color 0.2s;
+}
+
+.btn-primaire:hover {
+    background-color: #2ea043;
+}
+
+.btn-secondaire {
+    background-color: transparent;
+    color: #e6edf3 !important;
+    padding: 12px 28px;
+    border-radius: 8px;
+    text-decoration: none !important;
+    font-size: 0.95rem;
+    display: inline-block;
+    border: 1px solid #30363d;
+    transition: border-color 0.2s;
+}
+
+.btn-secondaire:hover {
+    border-color: #58a6ff;
+}
+
+.section-titre {
+    font-size: 1.5rem;
+    margin: 40px 0 20px;
+}
+
+/* GRILLE PROJETS */
+.projets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.projet-card .contenu {
+    padding: 15px 18px;
+}
+
+.projet-card h3 {
+    font-size: 1.05rem;
+    margin-bottom: 4px;
+}
+
+.projet-card .categorie {
+    color: #8b949e;
+    font-size: 0.8rem;
+    margin: 0;
 }

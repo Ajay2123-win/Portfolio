@@ -1,0 +1,132 @@
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.table-admin {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table-admin thead {
+    background-color: #21262d;
+}
+
+.table-admin th {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #8b949e;
+    font-weight: 600;
+}
+
+.table-admin td {
+    padding: 12px 16px;
+    border-top: 1px solid #21262d;
+    font-size: 0.9rem;
+    vertical-align: middle;
+}
+
+.table-admin tbody tr:hover {
+    background-color: #1c2128;
+}
+
+.actions-cell {
+    display: flex;
+    gap: 8px;
+}
+
+.actions-cell .btn {
+    padding: 5px 12px;
+    font-size: 0.8rem;
+}
+
+.admin-form {
+    max-width: 650px;
+}
+
+.admin-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+    color: #8b949e;
+}
+
+.admin-form .form-control,
+.admin-form select {
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    color: #e6edf3;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    width: 100%;
+}
+
+.admin-form .form-control:focus {
+    background-color: #0d1117;
+    border-color: #58a6ff;
+    color: #e6edf3;
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
+}
+
+.admin-form textarea.form-control {
+    min-height: 100px;
+}
+
+.show-panel {
+    background-color: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.show-panel table {
+    width: 100%;
+}
+
+.show-panel th {
+    text-align: left;
+    padding: 12px 16px;
+    color: #8b949e;
+    font-size: 0.85rem;
+    width: 200px;
+    border-top: 1px solid #21262d;
+}
+
+.show-panel td {
+    padding: 12px 16px;
+    border-top: 1px solid #21262d;
+}
+
+body.light-mode .table-admin,
+body.light-mode .show-panel {
+    background-color: #ffffff;
+    border-color: #d0d7de;
+}
+
+body.light-mode .table-admin thead {
+    background-color: #f6f8fa;
+}
+
+body.light-mode .table-admin td,
+body.light-mode .show-panel th,
+body.light-mode .show-panel td {
+    border-top-color: #d0d7de;
+}
+
+body.light-mode .admin-form .form-control {
+    background-color: #ffffff;
+    border-color: #d0d7de;
+    color: #24292f;
+}

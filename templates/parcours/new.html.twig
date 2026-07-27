@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Parcours{% endblock %}
+{% block title %}Nouvelle étape de Parcours{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Parcours</h1>
+    <div class="admin-header">
+        <h1 class="h3 mb-0">Nouvelle étape</h1>
+        <a href="{{ path('app_parcours_index') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Retour à la liste
+        </a>
+    </div>
 
     {{ include('parcours/_form.html.twig') }}
-
-    <a href="{{ path('app_parcours_index') }}">back to list</a>
 {% endblock %}

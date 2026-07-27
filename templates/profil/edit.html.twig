@@ -1,13 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Profil{% endblock %}
+{% block title %}Modifier le Profil{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Profil</h1>
+    <div class="admin-header">
+        <h1 class="h3 mb-0">Modifier le profil</h1>
+        <a href="{{ path('app_profil_index') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Retour à la liste
+        </a>
+    </div>
 
-    {{ include('profil/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_profil_index') }}">back to list</a>
+    {{ include('profil/_form.html.twig') }}
 
     {{ include('profil/_delete_form.html.twig') }}
 {% endblock %}
