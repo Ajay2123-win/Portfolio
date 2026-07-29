@@ -5,31 +5,106 @@
 {% endblock %}
 
 {% block body %}
-    <div class="hero">
-        <h1>Bonjour, je suis {{ profil ? profil.prenom : 'Développeur' }}</h1>
-        <p class="sous-titre">
+    <div class="hero" id="hero">
+        <p class="hero-kicker reveal">Portfolio développeur</p>
+        <h1 class="hero-titre reveal">
+            <span class="ligne">Bonjour, je suis</span>
+            <span class="ligne accent-text">{{ profil ? profil.prenom : 'Développeur' }}</span>
+        </h1>
+        <p class="sous-titre reveal">
             {{ profil and profil.bio ? profil.bio|slice(0, 200) ~ '...' : 'Développeur passionné par la création de solutions web modernes et performantes.' }}
         </p>
-        <div class="actions">
-            <a href="{{ path('app_projets_public') }}" class="btn-primaire">Voir mes projets</a>
-            <a href="{{ path('app_contact_public') }}" class="btn-secondaire">Me contacter</a>
+        <div class="actions reveal">
+            <a href="{{ path('app_projets_public') }}" class="btn-primaire btn-magnetique">Voir mes projets</a>
+            <a href="{{ path('app_contact_public') }}" class="btn-secondaire btn-magnetique">Me contacter</a>
         </div>
     </div>
 
-    <h2 class="section-titre">Quelques réalisations</h2>
+<div class="stats-grid reveal">
+    <div class="stat-item">
+        <span class="stat-nombre" data-cible="{{ nombreProjets|default(12) }}">0</span>
+        <span class="stat-label">Projets réalisés</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-nombre" data-cible="{{ anneesExperience|default(2) }}">0</span>
+        <span class="stat-label">Années d'expérience</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-nombre" data-cible="{{ nombreTechnos|default(8) }}">0</span>
+        <span class="stat-label">Technologies maîtrisées</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-nombre" data-cible="100" data-suffixe="%">0</span>
+        <span class="stat-label">Projets livrés à temps</span>
+    </div>
+</div>
+
+    <h2 class="section-titre reveal">Quelques réalisations</h2>
     <div class="projets-grid">
         {% for projet in derniersProjets %}
-            <div class="projet-card">
+            <div class="projet-card reveal">
+                <span class="projet-num">{{ '%02d'|format(loop.index) }}</span>
                 {% if projet.image %}
-                    <img src="{{ asset('uploads/projets/' ~ projet.image) }}" alt="{{ projet.titre }}">
+                    <div class="projet-image">
+                        <img src="{{ asset('uploads/projets/' ~ projet.image) }}" alt="{{ projet.titre }}">
+                        <span class="projet-overlay"><i class="bi bi-arrow-up-right"></i> Voir le projet</span>
+                    </div>
                 {% endif %}
                 <div class="contenu">
+                    <span class="categorie">{{ projet.categorie }}</span>
                     <h3>{{ projet.titre }}</h3>
-                    <p class="categorie">{{ projet.categorie }}</p>
                 </div>
             </div>
         {% else %}
-            <p>Aucun projet pour le moment.</p>
+            <p class="reveal">Aucun projet pour le moment.</p>
         {% endfor %}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        const hero = document.getElementById('hero');
+        if (hero && window.matchMedia('(pointer: fine)').matches) {
+            hero.addEventListener('mousemove', (e) => {
+                const rect = hero.getBoundingClientRect();
+                hero.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width * 100) + '%');
+                hero.style.setProperty('--my', ((e.clientY - rect.top) / rect.height * 100) + '%');
+            });
+        }
+
+        // Effet magnétique sur les boutons du hero
+        if (window.matchMedia('(pointer: fine)').matches) {
+            document.querySelectorAll('.btn-magnetique').forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    btn.style.transform = `translate(${x * 0.25}px, ${y * 0.35}px)`;
+                });
+                btn.addEventListener('mouseleave', () => {
+                    btn.style.transform = 'translate(0, 0)';
+                });
+            });
+        }
+    const compteurs = document.querySelectorAll('.stat-nombre');
+    const compteurObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entree => {
+            if (!entree.isIntersecting) return;
+            const el = entree.target;
+            const cible = parseInt(el.dataset.cible, 10) || 0;
+            const suffixe = el.dataset.suffixe || '';
+            const debut = performance.now();
+            const duree = 1400;
+            function tick(maintenant) {
+                const progres = Math.min((maintenant - debut) / duree, 1);
+                el.textContent = Math.floor(progres * cible) + suffixe;
+                if (progres < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+            compteurObserver.unobserve(el);
+        });
+    }, { threshold: 0.4 });
+    compteurs.forEach(el => compteurObserver.observe(el));
+
+    </script>
 {% endblock %}

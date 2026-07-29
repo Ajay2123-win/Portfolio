@@ -1,33 +1,92 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Contact - Portfolio{% endblock %}
-
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/contact.css') }}">
 {% endblock %}
 
 {% block body %}
-    <h1 class="mb-4">Me contacter</h1>
+    <div class="contact-entete reveal">
+        <p class="hero-kicker">Contact</p>
+        <h1 class="contact-titre">Parlons de votre <span class="accent-text">projet</span></h1>
+        <p class="sous-titre">Une question, une opportunité de collaboration ? Écrivez-moi, je réponds rapidement.</p>
+    </div>
 
-    {% for message in app.flashes('success') %}
-        <div class="alert-succes">{{ message }}</div>
+    {% for message in app.flashes('succes') %}
+        <div class="alerte-succes reveal">
+            <i class="bi bi-check-circle-fill"></i> {{ message }}
+        </div>
     {% endfor %}
 
-    <div class="contact-form">
-        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
-            <div class="mb-3">
-                {{ form_label(form.nom) }}
-                {{ form_widget(form.nom, {attr: {class: 'form-control'}}) }}
-            </div>
-            <div class="mb-3">
-                {{ form_label(form.email) }}
-                {{ form_widget(form.email, {attr: {class: 'form-control'}}) }}
-            </div>
-            <div class="mb-3">
-                {{ form_label(form.contenu) }}
-                {{ form_widget(form.contenu, {attr: {class: 'form-control'}}) }}
-            </div>
-            <button type="submit" class="btn btn-success px-4">Envoyer</button>
-        {{ form_end(form) }}
-    </div>
+    <form class="contact-form reveal" id="formulaireContact" method="post" novalidate>
+        <input type="hidden" name="_token" value="{{ csrf_token('contact') }}">
+
+        <div class="champ">
+            <label for="nom">Nom complet</label>
+            <input type="text" id="nom" name="nom" required minlength="2">
+            <span class="champ-erreur">Merci d'indiquer votre nom.</span>
+        </div>
+
+        <div class="champ">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            <span class="champ-erreur">Adresse email invalide.</span>
+        </div>
+
+        <div class="champ champ-large">
+            <label for="sujet">Sujet</label>
+            <input type="text" id="sujet" name="sujet" required minlength="3">
+            <span class="champ-erreur">Merci d'indiquer un sujet.</span>
+        </div>
+
+        <div class="champ champ-large">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required minlength="10"></textarea>
+            <span class="champ-erreur">Votre message est trop court.</span>
+        </div>
+
+        <button type="submit" class="btn-primaire btn-magnetique btn-envoyer">
+            <span class="btn-texte">Envoyer le message</span>
+            <span class="btn-icone"><i class="bi bi-send"></i></span>
+        </button>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        const form = document.getElementById('formulaireContact');
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                let valide = true;
+                form.querySelectorAll('[required]').forEach(champ => {
+                    const conteneur = champ.closest('.champ');
+                    if (!champ.checkValidity()) {
+                        valide = false;
+                        conteneur.classList.add('champ-invalide', 'secousse');
+                        setTimeout(() => conteneur.classList.remove('secousse'), 400);
+                    } else {
+                        conteneur.classList.remove('champ-invalide');
+                    }
+                });
+                if (!valide) e.preventDefault();
+                else form.querySelector('.btn-envoyer').classList.add('envoi-en-cours');
+            });
+            form.querySelectorAll('[required]').forEach(champ => {
+                champ.addEventListener('input', () => {
+                    if (champ.checkValidity()) champ.closest('.champ').classList.remove('champ-invalide');
+                });
+            });
+        }
+
+        if (window.matchMedia('(pointer: fine)').matches) {
+            document.querySelectorAll('.btn-magnetique').forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    btn.style.transform = `translate(${x * 0.2}px, ${y * 0.3}px)`;
+                });
+                btn.addEventListener('mouseleave', () => { btn.style.transform = 'translate(0,0)'; });
+            });
+        }
+    </script>
 {% endblock %}

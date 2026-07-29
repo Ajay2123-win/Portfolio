@@ -1,9 +1,21 @@
 <!DOCTYPE html>
 <html lang="fr">
+{% set profil = profil_actuel() %}
+{% set route_actuelle = app.request.attributes.get('_route') %}
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Mon Portfolio{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% block meta_description %}Portfolio de {{ profil ? profil.prenom ~ ' ' ~ profil.nom : 'développeur' }} — projets, compétences et contact.{% endblock %}">
+    <link rel="canonical" href="{{ app.request.uri }}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{% block og_title %}{{ block('title') }}{% endblock %}">
+    <meta property="og:description" content="{{ block('meta_description') }}">
+    <meta property="og:url" content="{{ app.request.uri }}">
+    {% if profil and profil.photo %}
+        <meta property="og:image" content="{{ absolute_url(asset('uploads/photos/' ~ profil.photo)) }}">
+    {% endif %}
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -13,73 +25,89 @@
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
+    <div class="aurora" aria-hidden="true"></div>
+
     {% set profil = profil_actuel() %}
+    {% set route_actuelle = app.request.attributes.get('_route') %}
 
     <div class="container-fluid p-0">
         <div class="row g-0">
 
             <aside class="col-lg-3 col-xl-2 sidebar p-4">
                 {% if profil %}
-                    <div class="text-center">
+                    <div class="avatar-orbit mb-3">
+                        <svg viewBox="0 0 160 160" class="orbit-svg" aria-hidden="true">
+                            <defs>
+                                <path id="orbitPath" d="M 80,80 m -68,0 a 68,68 0 1,1 136,0 a 68,68 0 1,1 -136,0" />
+                            </defs>
+                            <text>
+                                <textPath href="#orbitPath" startOffset="0%">Disponible pour un projet&#160;&#10022;&#160;Disponible pour un projet&#160;&#10022;&#160;</textPath>
+                            </text>
+                        </svg>
                         <img src="{{ profil.photo ? asset('uploads/photos/' ~ profil.photo) : asset('css/default-avatar.png') }}"
-                             alt="Photo de profil" class="rounded-3 mb-3" style="width: 140px; height: 140px; object-fit: cover;">
+                             alt="Photo de profil" class="avatar-img">
+                    </div>
+
+                    <div class="text-center">
                         <h5 class="mb-1">{{ profil.prenom }} {{ profil.nom }}</h5>
                         <span class="badge rounded-pill titre-poste mb-4">{{ profil.titre }}</span>
                     </div>
 
-                    <div class="info-block mb-3">
-                        <label class="text-uppercase small text-secondary">Email</label>
-                        <div class="valeur small">{{ profil.email }}</div>
-                    </div>
-
-                    {% if profil.telephone %}
-                    <div class="info-block mb-3">
-                        <label class="text-uppercase small text-secondary">Téléphone</label>
-                        <div class="valeur small">{{ profil.telephone }}</div>
-                    </div>
-                    {% endif %}
-
-                    {% if profil.localisation %}
-                    <div class="info-block mb-3">
-                        <label class="text-uppercase small text-secondary">Localisation</label>
-                        <div class="valeur small">{{ profil.localisation }}</div>
-                    </div>
-                    {% endif %}
-
-                    {% if profil.lienProjetDeploye %}
-                    <div class="info-block mb-3">
-                        <label class="text-uppercase small text-secondary">Projet déployé</label>
-                        <div class="valeur small text-truncate">
-                            <a href="{{ profil.lienProjetDeploye }}" class="text-decoration-none text-reset" target="_blank">{{ profil.lienProjetDeploye }}</a>
+                    <div class="rail-liste">
+                        <div class="rail-item">
+                            <i class="bi bi-envelope"></i>
+                            <span>{{ profil.email }}</span>
                         </div>
+                        {% if profil.telephone %}
+                        <div class="rail-item">
+                            <i class="bi bi-telephone"></i>
+                            <span>{{ profil.telephone }}</span>
+                        </div>
+                        {% endif %}
+                        {% if profil.localisation %}
+                        <div class="rail-item">
+                            <i class="bi bi-geo-alt"></i>
+                            <span>{{ profil.localisation }}</span>
+                        </div>
+                        {% endif %}
+                        {% if profil.lienProjetDeploye %}
+                        <a href="{{ profil.lienProjetDeploye }}" class="rail-item rail-link" target="_blank">
+                            <i class="bi bi-box-arrow-up-right"></i>
+                            <span class="text-truncate">{{ profil.lienProjetDeploye }}</span>
+                        </a>
+                        {% endif %}
                     </div>
-                    {% endif %}
 
-                    <div class="d-flex gap-3 justify-content-center mt-4">
+                    <div class="d-flex gap-2 justify-content-center mt-4">
                         {% if profil.lienGithub %}
-                            <a href="{{ profil.lienGithub }}" class="text-reset" target="_blank"><i class="bi bi-github fs-5"></i></a>
+                            <a href="{{ profil.lienGithub }}" class="social-link" target="_blank"><i class="bi bi-github"></i></a>
                         {% endif %}
                         {% if profil.lienLinkedin %}
-                            <a href="{{ profil.lienLinkedin }}" class="text-reset" target="_blank"><i class="bi bi-linkedin fs-5"></i></a>
+                            <a href="{{ profil.lienLinkedin }}" class="social-link" target="_blank"><i class="bi bi-linkedin"></i></a>
                         {% endif %}
                     </div>
+
+                    <a href="{{ asset('cv.pdf') }}" download class="cv-download">
+                        <i class="bi bi-download"></i> Télécharger mon CV
+                    </a>
                 {% else %}
                     <p>Profil non renseigné.</p>
                 {% endif %}
             </aside>
 
             <main class="col-lg-9 col-xl-10 main-content p-4 p-lg-5">
-                <nav class="navbar navbar-expand-lg mb-4">
-                    <div class="container-fluid px-0 d-flex justify-content-between align-items-center flex-wrap gap-3">
-                        <div class="d-flex gap-4">
-                            <a href="{{ path('app_home') }}" class="nav-link-custom">Accueil</a>
-                            <a href="{{ path('app_projets_public') }}" class="nav-link-custom">Projets</a>
-                            <a href="{{ path('app_parcours_public') }}" class="nav-link-custom">Parcours</a>
-                            <a href="{{ path('app_apropos_public') }}" class="nav-link-custom">À propos</a>
-                            <a href="{{ path('app_contact_public') }}" class="nav-link-custom">Contact</a>
-                        </div>
-                        <button class="theme-toggle btn rounded-pill" id="themeToggle"><i class="bi bi-moon-stars me-1"></i> Mode sombre</button>
+                <nav class="topbar mb-5">
+                    <div class="nav-links">
+                        <a href="{{ path('app_home') }}" class="nav-link-custom {{ route_actuelle == 'app_home' ? 'active' : '' }}">Accueil</a>
+                        <a href="{{ path('app_projets_public') }}" class="nav-link-custom {{ route_actuelle == 'app_projets_public' ? 'active' : '' }}">Projets</a>
+                        <a href="{{ path('app_parcours_public') }}" class="nav-link-custom {{ route_actuelle == 'app_parcours_public' ? 'active' : '' }}">Parcours</a>
+                        <a href="{{ path('app_apropos_public') }}" class="nav-link-custom {{ route_actuelle == 'app_apropos_public' ? 'active' : '' }}">À propos</a>
+                        <a href="{{ path('app_contact_public') }}" class="nav-link-custom {{ route_actuelle == 'app_contact_public' ? 'active' : '' }}">Contact</a>
                     </div>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Basculer entre mode clair et mode sombre">
+                        <i class="bi bi-moon-stars"></i>
+                        <i class="bi bi-sun"></i>
+                    </button>
                 </nav>
 
                 {% block body %}{% endblock %}
@@ -90,22 +118,63 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Thème clair/sombre
         const toggle = document.getElementById('themeToggle');
         const body = document.body;
+        if (localStorage.getItem('theme') === 'light') body.classList.add('light-mode');
+        toggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            localStorage.setItem('theme', body.classList.contains('light-mode') ? 'light' : 'dark');
+        });
 
-if (localStorage.getItem('theme') === 'light') {
-    body.classList.add('light-mode');
-    toggle.innerHTML = '<i class="bi bi-sun me-1"></i> Mode clair';
-}
+        // Reveal au scroll
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-toggle.addEventListener('click', () => {
-    body.classList.toggle('light-mode');
-    const isLight = body.classList.contains('light-mode');
-    localStorage.setItem('theme', isLight ? 'light' : 'dark');
-    toggle.innerHTML = isLight
-        ? '<i class="bi bi-sun me-1"></i> Mode clair'
-        : '<i class="bi bi-moon-stars me-1"></i> Mode sombre';
-});
+        // Curseur personnalisé (desktop uniquement)
+        if (window.matchMedia('(pointer: fine)').matches && window.innerWidth > 992) {
+            document.documentElement.classList.add('custom-cursor-actif');
+            const dot = document.createElement('div');
+            dot.className = 'cursor-dot';
+            const ring = document.createElement('div');
+            ring.className = 'cursor-ring';
+            document.body.append(dot, ring);
+
+            let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX; mouseY = e.clientY;
+                dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+            });
+            (function animerRing() {
+                ringX += (mouseX - ringX) * 0.18;
+                ringY += (mouseY - ringY) * 0.18;
+                ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+                requestAnimationFrame(animerRing);
+            })();
+
+            document.querySelectorAll('a, button, .projet-card').forEach(el => {
+                el.addEventListener('mouseenter', () => ring.classList.add('cursor-survole'));
+                el.addEventListener('mouseleave', () => ring.classList.remove('cursor-survole'));
+            });
+        }
+
+        // Transition douce entre les pages
+        document.querySelectorAll('a[href]').forEach(lien => {
+            const href = lien.getAttribute('href');
+            if (!href || href.startsWith('#') || href.startsWith('http') || lien.target === '_blank' || lien.hasAttribute('download')) return;
+            lien.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.body.classList.add('page-sortante');
+                setTimeout(() => { window.location = href; }, 220);
+            });
+        });
     </script>
 
     {% block javascripts %}{% endblock %}
